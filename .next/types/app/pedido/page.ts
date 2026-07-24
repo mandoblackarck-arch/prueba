@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Documents\Codex\2026-07-21\testToka\src\app\pedido\page.tsx
+// File: C:\Users\admin\Documents\GitHub\prueba\src\app\pedido\page.tsx
 import * as entry from '../../../../src/app/pedido/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

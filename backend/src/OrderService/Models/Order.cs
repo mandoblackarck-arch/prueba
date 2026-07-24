@@ -1,0 +1,3 @@
+namespace OrderService.Models;
+public sealed class Order { public Guid Id { get; set; } = Guid.NewGuid(); public string Number { get; set; } = $"ORD-{Guid.NewGuid():N}"; public Guid CustomerId { get; set; } public decimal Total { get; set; } public string Status { get; set; } = "Created"; public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow; public List<OrderLine> Lines { get; set; } = []; }
+public sealed class OrderLine { public Guid Id { get; set; } = Guid.NewGuid(); public Guid OrderId { get; set; } public Order? Order { get; set; } public string ProductId { get; set; } = string.Empty; public int Quantity { get; set; } public decimal UnitPrice { get; set; } }

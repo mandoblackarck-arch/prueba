@@ -1,0 +1,17 @@
+name: CI
+on: [push, pull_request]
+permissions: { contents: read }
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: 8.0.x }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - run: dotnet test backend/tests/CatalogService.Tests/CatalogService.Tests.csproj --configuration Release
+      - run: dotnet list backend/src/IdentityService/IdentityService.csproj package --vulnerable --include-transitive
+      - run: npm audit --omit=dev --audit-level=high

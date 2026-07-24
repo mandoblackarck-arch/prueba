@@ -1,0 +1,40 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: ${SQL_PASSWORD:?set SQL_PASSWORD in .env}
+    ports: ["1433:1433"]
+    volumes: [sql-data:/var/opt/mssql]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P $$MSSQL_SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+  identity:
+    build: { context: ./backend, args: { SERVICE: IdentityService } }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__IdentityDb: Server=sqlserver;Database=CommerceIdentity;User Id=sa;Password=${SQL_PASSWORD};TrustServerCertificate=True
+      Jwt__Key: ${JWT_KEY:?set JWT_KEY in .env (32+ chars)}
+    depends_on: { sqlserver: { condition: service_healthy } }
+  catalog:
+    build: { context: ./backend, args: { SERVICE: CatalogService } }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__CatalogDb: Server=sqlserver;Database=CommerceCatalog;User Id=sa;Password=${SQL_PASSWORD};TrustServerCertificate=True
+    depends_on: { sqlserver: { condition: service_healthy } }
+  orders:
+    build: { context: ./backend, args: { SERVICE: OrderService } }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__OrderDb: Server=sqlserver;Database=CommerceOrders;User Id=sa;Password=${SQL_PASSWORD};TrustServerCertificate=True
+      ConnectionStrings__CatalogDb: Server=sqlserver;Database=CommerceCatalog;User Id=sa;Password=${SQL_PASSWORD};TrustServerCertificate=True
+      Jwt__Key: ${JWT_KEY:?set JWT_KEY in .env (32+ chars)}
+    depends_on: { sqlserver: { condition: service_healthy } }
+  gateway:
+    image: nginx:1.27-alpine
+    ports: ["8080:80"]
+    volumes: [./deploy/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro]
+    depends_on: [identity, catalog, orders]
+volumes: { sql-data: {} }

@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Documents\Codex\2026-07-21\testToka\src\app\direcciones\page.tsx
+// File: C:\Users\admin\Documents\GitHub\prueba\src\app\direcciones\page.tsx
 import * as entry from '../../../../src/app/direcciones/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

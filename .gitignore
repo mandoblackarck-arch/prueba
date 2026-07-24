@@ -1,0 +1,8 @@
+node_modules/
+.next/
+backend/**/bin/
+backend/**/obj/
+.dotnet-cli/
+.env
+.env.local
+*.user

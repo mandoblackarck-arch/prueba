@@ -1,19 +1,22 @@
 # Comercio Web
 
-Interfaz de e-commerce con Next.js (App Router) preparada para un backend de ASP.NET Core Minimal APIs.
+Aplicación de comercio electrónico full-stack con Next.js y microservicios ASP.NET Core 8. El frontend ahora refleja el estado real del catálogo, incluyendo la disponibilidad del inventario y el bloqueo de productos sin stock.
 
-## Ejecutar
+## Resumen ejecutivo
 
-1. Copia `.env.example` a `.env.local` y ajusta `NEXT_PUBLIC_API_URL`.
-2. `npm install`
-3. `npm run dev`
+- El usuario puede registrarse e iniciar sesión desde la interfaz.
+- El catálogo consume los productos desde el gateway del backend en `http://localhost:8080`.
+- El carrito y el checkout están preparados para operar sobre pedidos reales con autenticación JWT.
+- La disponibilidad de inventario se muestra en tiempo real en la UI, evitando agregar productos agotados.
 
-## Contratos de API esperados
+## Inicio rápido
 
-- `POST /auth/login`, `POST /auth/register`
-- `GET /products`, `GET /products/{id}`
-- `POST /orders` (autenticado), `GET /orders/{number}/status` (público)
-- `POST /payments/simulate` (autenticado)
-- `POST /events` (autenticado; auditoría de acciones)
+1. Levanta los servicios del backend con Docker Compose siguiendo [BACKEND.md](BACKEND.md).
+2. Copia [.env.example](.env.example) a `.env.local` y ajusta `NEXT_PUBLIC_API_URL` si es necesario.
+3. Instala dependencias con `npm install`.
+4. Inicia el frontend con `npm run dev`.
 
-Los servicios están aislados en `src/features/*/services`; cambia sus implementaciones de demostración por llamadas HTTP al conectar el backend.
+## Documentación adicional
+
+- README ejecutivo: [README_EJECUTIVO.md](README_EJECUTIVO.md)
+- Arquitectura: [ARCHITECTURE.md](ARCHITECTURE.md)
