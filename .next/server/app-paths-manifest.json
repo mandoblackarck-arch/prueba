@@ -1,10 +1,10 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/acceso/page": "app/acceso/page.js",
-  "/carrito/page": "app/carrito/page.js",
-  "/checkout/page": "app/checkout/page.js",
-  "/page": "app/page.js",
   "/direcciones/page": "app/direcciones/page.js",
+  "/checkout/page": "app/checkout/page.js",
+  "/carrito/page": "app/carrito/page.js",
   "/pedido/page": "app/pedido/page.js",
-  "/productos/page": "app/productos/page.js"
+  "/productos/page": "app/productos/page.js",
+  "/page": "app/page.js"
 }
